@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+<project name="web3" default="build" basedir=".">
+    <property file="build.properties"/>
+
+    <target name="init">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+        <mkdir dir="${doc.dir}"/>
+    </target>
+
+    <target name="compile" depends="init">
+        <echo>Compiling...</echo>
+        <javac srcdir="${src.dir}" destdir="${build.dir}">
+            <classpath>
+                <fileset dir="${lib.dir}" includes="*.jar"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="build" depends="compile">
+        <echo>Building...</echo>
+        <jar destfile="${dist.dir}/${jar.name}" basedir="${build.dir}">
+            <manifest>
+                <attribute name="Implementation-Version" value="${version}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="clean">
+        <echo>Cleaning...</echo>
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+        <delete dir="${doc.dir}"/>
+    </target>
+
+    <target name="test" depends="build">
+        <echo>Running JUnit Tests...</echo>
+        <path id="test.classpath">
+            <pathelement location="${build.dir}"/>
+            <pathelement location="${test.dir}"/>
+            <pathelement location="lib/junit-platform-console-standalone-1.10.2.jar"/>
+        </path>
+        <junitlauncher haltOnFailure="true" printSummary="true">
+            <classpath refid="test.classpath"/>
+            <testclasses outputdir="${test.reports.dir}">
+                <fileset dir="${test.dir}">
+                    <include name="**/*Test.class"/>
+                </fileset>
+            </testclasses>
+        </junitlauncher>
+    </target>
+    
+    <target name="xml" depends="init">
+        <echo>Validating XML files...</echo>
+        <taskdef name="xmlvalidation" classname="org.apache.tools.ant.taskdefs.optional.XMLValidateTask"/>
+        <xmlvalidation lenient="true">
+            <fileset dir="${basedir}">
+                <include name="**/*.xml"/>
+                <exclude name=".idea/**"/>
+            </fileset>
+        </xmlvalidation>
+    </target>
+
+    <target name="scp" depends="build">
+        <echo>Putting to remote server...</echo>
+        <scp todir="s368051:zmqd&amp;5562@helios.cs.ifmo.ru:/home/studs/s368051" trust="true" port="2222">
+            <fileset dir="${dist.dir}">
+                <include name="**/*.jar"/>
+            </fileset>
+        </scp>
+    </target>
+
+    <target name="music">
+        <echo>Playing cool music for you...</echo>
+        <exec executable="C:\Program Files (x86)\VideoLAN\VLC\vlc.exe">
+            <arg value="shrek\shrek.mp3"/>
+        </exec>
+    </target>
+
+</project>
