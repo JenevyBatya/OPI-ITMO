@@ -50,7 +50,7 @@
             </testclasses>
         </junitlauncher>
     </target>
-    
+
     <target name="xml" depends="init">
         <echo>Validating XML files...</echo>
         <taskdef name="xmlvalidation" classname="org.apache.tools.ant.taskdefs.optional.XMLValidateTask"/>
@@ -71,11 +71,12 @@
         </scp>
     </target>
 
-    <target name="music">
+    <target name="music" depends="build">
         <echo>Playing cool music for you...</echo>
-        <exec executable="C:\Program Files (x86)\VideoLAN\VLC\vlc.exe">
-            <arg value="shrek\shrek.mp3"/>
-        </exec>
+        <sound>
+            <success source="${music.dir}" duration="30000"/>
+            <fail source="${music.dir}" duration="30000"/>
+        </sound>
     </target>
 
 </project>
