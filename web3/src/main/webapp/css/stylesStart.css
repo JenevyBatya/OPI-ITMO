@@ -1,0 +1,110 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: 'Georgia', serif;
+    color: #333;
+}
+
+#information {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+}
+
+#information h1, #information h2, #information h3 {
+    margin: 0;
+    padding: 0;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+}
+
+
+
+.formButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px; /* Высота контейнера, чтобы центрировать вертикально посередине страницы */
+}
+
+.button {
+    background-color: #8a65f8;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.button:hover {
+    background-color: #6a65f8;
+    transform: scale(1.05);
+}
+
+
+
+
+.clockbox,
+#clock {
+    width: 100%;
+}
+
+.circle {
+    fill: none;
+    stroke: #000;
+    stroke-width: 9;
+    stroke-miterlimit: 10;
+}
+
+.mid-circle {
+    fill: #000;
+}
+.hour-marks {
+    fill: none;
+    stroke: #000;
+    stroke-width: 9;
+    stroke-miterlimit: 10;
+}
+
+.hour-arm {
+    fill: none;
+    stroke: #000;
+    stroke-width: 17;
+    stroke-miterlimit: 10;
+}
+
+.minute-arm {
+    fill: none;
+    stroke: #000;
+    stroke-width: 11;
+    stroke-miterlimit: 10;
+}
+
+
+
+.sizing-box {
+    fill: none;
+}
+
+#hour,
+#minute {
+    transform-origin: 300px 300px;
+}
