@@ -1,0 +1,91 @@
+<?xml version="1.0" ?>
+<testsuite name="HitTest" time="0.143" timestamp="2024-05-05T05:38:01" tests="3" failures="0" skipped="0" aborted="0">
+    <properties>
+        <property name="ant.file.type.web3" value="file"></property>
+        <property name="ant.library.dir" value="D:\apache-ant-1.10.14\lib"></property>
+        <property name="ant.file.type" value="file"></property>
+        <property name="java.specification.version" value="20"></property>
+        <property name="ant.project.name" value="web3"></property>
+        <property name="sun.cpu.isalist" value="amd64"></property>
+        <property name="sun.jnu.encoding" value="Cp1251"></property>
+        <property name="java.class.path"
+                  value="D:\apache-ant-1.10.14\bin\..\lib\ant-launcher.jar;D:\apache-ant-1.10.14\lib\ant-antlr.jar;D:\apache-ant-1.10.14\lib\ant-apache-bcel.jar;D:\apache-ant-1.10.14\lib\ant-apache-bsf.jar;D:\apache-ant-1.10.14\lib\ant-apache-log4j.jar;D:\apache-ant-1.10.14\lib\ant-apache-oro.jar;D:\apache-ant-1.10.14\lib\ant-apache-regexp.jar;D:\apache-ant-1.10.14\lib\ant-apache-resolver.jar;D:\apache-ant-1.10.14\lib\ant-apache-xalan2.jar;D:\apache-ant-1.10.14\lib\ant-commons-logging.jar;D:\apache-ant-1.10.14\lib\ant-commons-net.jar;D:\apache-ant-1.10.14\lib\ant-imageio.jar;D:\apache-ant-1.10.14\lib\ant-jai.jar;D:\apache-ant-1.10.14\lib\ant-jakartamail.jar;D:\apache-ant-1.10.14\lib\ant-javamail.jar;D:\apache-ant-1.10.14\lib\ant-jdepend.jar;D:\apache-ant-1.10.14\lib\ant-jmf.jar;D:\apache-ant-1.10.14\lib\ant-jsch.jar;D:\apache-ant-1.10.14\lib\ant-junit.jar;D:\apache-ant-1.10.14\lib\ant-junit4.jar;D:\apache-ant-1.10.14\lib\ant-junitlauncher.jar;D:\apache-ant-1.10.14\lib\ant-launcher.jar;D:\apache-ant-1.10.14\lib\ant-netrexx.jar;D:\apache-ant-1.10.14\lib\ant-swing.jar;D:\apache-ant-1.10.14\lib\ant-testutil.jar;D:\apache-ant-1.10.14\lib\ant-xz.jar;D:\apache-ant-1.10.14\lib\ant.jar;D:\apache-ant-1.10.14\lib\jaxb-api-2.3.1.jar;D:\apache-ant-1.10.14\lib\jsch-0.2.17.jar;D:\apache-ant-1.10.14\lib\junit-platform-console-standalone-1.10.2.jar"></property>
+        <property name="java.vm.vendor" value="Oracle Corporation"></property>
+        <property name="sun.arch.data.model" value="64"></property>
+        <property name="src.test.dir" value="src/test/java"></property>
+        <property name="user.variant" value=""></property>
+        <property name="java.vendor.url" value="https://java.oracle.com/"></property>
+        <property name="os.name" value="Windows 10"></property>
+        <property name="java.vm.specification.version" value="20"></property>
+        <property name="sun.java.launcher" value="SUN_STANDARD"></property>
+        <property name="user.country" value="RU"></property>
+        <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-20\bin"></property>
+        <property name="sun.java.command" value="org.apache.tools.ant.launch.Launcher test"></property>
+        <property name="jdk.debug" value="release"></property>
+        <property name="sun.cpu.endian" value="little"></property>
+        <property name="test.dir" value="target/test-classes"></property>
+        <property name="user.home" value="C:\Users\theal"></property>
+        <property name="user.language" value="ru"></property>
+        <property name="java.specification.vendor" value="Oracle Corporation"></property>
+        <property name="java.version.date" value="2023-04-18"></property>
+        <property name="version" value="1.0.0"></property>
+        <property name="java.home" value="C:\Program Files\Java\jdk-20"></property>
+        <property name="basedir" value="C:\Users\theal\Desktop\ITMO\opi\lab3\OPI-ITMO\web3"></property>
+        <property name="file.separator" value="\"></property>
+        <property name="java.vm.compressedOopsMode" value="Zero based"></property>
+        <property name="line.separator" value="
+"></property>
+        <property name="ant.java.version" value="20"></property>
+        <property name="java.specification.name" value="Java Platform API Specification"></property>
+        <property name="java.vm.specification.vendor" value="Oracle Corporation"></property>
+        <property name="doc.dir" value="target/docs"></property>
+        <property name="git.dir" value="../"></property>
+        <property name="user.script" value=""></property>
+        <property name="jar.name" value="project.jar"></property>
+        <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"></property>
+        <property name="java.runtime.version" value="20.0.1+9-29"></property>
+        <property name="user.name" value="M'lady"></property>
+        <property name="ant.file" value="C:\Users\theal\Desktop\ITMO\opi\lab3\OPI-ITMO\web3\build.xml"></property>
+        <property name="stdout.encoding" value="cp866"></property>
+        <property name="build.ascii.dir" value="build/ascii"></property>
+        <property name="path.separator" value=";"></property>
+        <property name="os.version" value="10.0"></property>
+        <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"></property>
+        <property name="build.src.dir" value="build/com/lab3/web3"></property>
+        <property name="file.encoding" value="UTF-8"></property>
+        <property name="ant.project.invoked-targets" value="test"></property>
+        <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"></property>
+        <property name="dist.dir" value="target/dist"></property>
+        <property name="target.dir" value="target"></property>
+        <property name="test.reports.dir" value="target/report"></property>
+        <property name="build.dir" value="build"></property>
+        <property name="ant.core.lib" value="D:\apache-ant-1.10.14\lib\ant.jar"></property>
+        <property name="vm.args" value="-Xmx512m"></property>
+        <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"></property>
+        <property name="java.io.tmpdir" value="C:\Users\theal\AppData\Local\Temp\"></property>
+        <property name="java.version" value="20.0.1"></property>
+        <property name="user.dir" value="C:\Users\theal\Desktop\ITMO\opi\lab3\OPI-ITMO\web3"></property>
+        <property name="os.arch" value="amd64"></property>
+        <property name="java.vm.specification.name" value="Java Virtual Machine Specification"></property>
+        <property name="music.dir" value="music"></property>
+        <property name="ant.home" value="D:\apache-ant-1.10.14\bin\.."></property>
+        <property name="lib.dir" value="lib"></property>
+        <property name="ant.file.web3" value="C:\Users\theal\Desktop\ITMO\opi\lab3\OPI-ITMO\web3\build.xml"></property>
+        <property name="sun.os.patch.level" value=""></property>
+        <property name="native.encoding" value="Cp1251"></property>
+        <property name="ant.version" value="Apache Ant(TM) version 1.10.14 compiled on August 16 2023"></property>
+        <property name="java.library.path"
+                  value="C:\Program Files\Java\jdk-20\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;D:\tools\python312\Scripts\;D:\tools\python312\;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Eclipse Adoptium\jdk-17.0.4.101-hotspot\bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\dotnet\;C:\Program Files\Git\cmd;C:\Program Files\apache-maven-3.9.1\bin;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;D:\bin;C:\Users\theal\AppData\Local\Programs\Python\Python311;C:\Users\theal\AppData\Local\Programs\Python\Python311\Scripts;D:\Calibre\;D:\tools\MinGW_13\bin;D:\nodejs\;C:\Program Files\dotnet\;D:\tools\SlikSvn\bin;C:\Users\theal\AppData\Local\Microsoft\WindowsApps;C:\Users\theal\AppData\Local\Programs\Python\Python311\Scripts;C:\Users\theal\AppData\Local\Programs\MiKTeX\miktex\bin\x64\;C:\Program Files\apache-maven-3.9.1\bin;C:\Program Files\JetBrains\IntelliJ IDEA 2023.2.6\bin;;C:\Users\theal\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\JetBrains\PhpStorm 2023.1.3\bin;;C:\Users\theal\go\bin;C:\Program Files\JetBrains\GoLand 2023.2.1\bin;;C:\Program Files\JetBrains\PyCharm 2023.3.4\bin;;C:\Users\theal\AppData\Local\Programs\Python\Python311;D:\tools\MinGW\bin;C:\Users\theal\AppData\Roaming\npm;D:\tools\gource\cmd;D:\tools\SlikSvn\bin;D:\apache-ant-1.10.14\bin;;."></property>
+        <property name="java.vendor" value="Oracle Corporation"></property>
+        <property name="stderr.encoding" value="cp866"></property>
+        <property name="java.vm.info" value="mixed mode, sharing"></property>
+        <property name="java.vm.version" value="20.0.1+9-29"></property>
+        <property name="sun.io.unicode.encoding" value="UnicodeLittle"></property>
+        <property name="java.class.version" value="64.0"></property>
+        <property name="src.dir" value="src/main/java"></property>
+        <property name="ant.project.default-target" value="build"></property>
+    </properties>
+    <testcase classname="HitTest" name="testCheckPointInCircleQuarter()" time="0.001"></testcase>
+    <testcase classname="HitTest" name="testCheckPointOutside()" time="0.002"></testcase>
+    <testcase classname="HitTest" name="testCheckPointInSquare()" time="0.028"></testcase>
+</testsuite>
