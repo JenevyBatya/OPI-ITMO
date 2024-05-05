@@ -1,0 +1,13 @@
+Index: build.xml
+===================================================================
+--- build.xml	(revision 11)
++++ build.xml	(revision 12)
+@@ -295,7 +295,7 @@
+                         <exec executable="svn" outputproperty="svn.revision">
+                             <arg line="info --show-item revision"/>
+                         </exec>
+-                        <echo message="Current revision: ${svn.revision}dv"/>
++                        <echo message="Current revision: ${svn.revision}"/>
+ 
+                     </catch>
+                 </trycatch>

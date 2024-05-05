@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"com.lab3.web3.models","l":"Hit"},{"p":"com.lab3.web3","l":"HitBean"},{"p":"com.lab3.web3.models","l":"HitResult"},{"p":"com.lab3.web3","l":"HitResultService"}];updateSearchResults();

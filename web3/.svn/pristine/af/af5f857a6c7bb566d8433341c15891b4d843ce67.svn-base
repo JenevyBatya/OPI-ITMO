@@ -1,0 +1,38 @@
+Index: build.xml
+===================================================================
+--- build.xml	(revision 2)
++++ build.xml	(revision 3)
+@@ -273,11 +273,11 @@
+     </target>
+     <target name="history">
+ <!--        <echo>before</echo>-->
+-        <exec executable="svn" dir="${basedir}" output="snv-info.txt">
++        <exec executable="svn" dir="${basedir}" output="svn-info.txt">
+             <arg value="info"/>
+         </exec>
+ 
+-        <loadfile property="svn.info" srcFile="snv-info.txt"/>
++        <loadfile property="svn.info" srcFile="svn-info.txt"/>
+         <propertyregex property="last.revision" input="${svn.info}" regexp="Revision: (\d+)" select="\1"/>
+ <!--        <echo message="${svn.info}"/>-->
+         <echo message="${last.revision}"/>
+Index: svn-info.txt
+===================================================================
+--- svn-info.txt	(nonexistent)
++++ svn-info.txt	(revision 3)
+@@ -0,0 +1,14 @@
++Path: .
++Working Copy Root Path: C:\Users\theal\Desktop\ITMO\opi\lab3\OPI-ITMO\web3
++URL: file:///C:/Users/theal/Desktop/ITMO/opi/lab3/OPI-ITMO/svnRepo/trunk
++Relative URL: ^/trunk
++Repository Root: file:///C:/Users/theal/Desktop/ITMO/opi/lab3/OPI-ITMO/svnRepo
++Repository UUID: 175a41df-5912-b24c-a16e-f5c5b8d72bc4
++Revision: 1
++Node Kind: directory
++Schedule: normal
++Last Changed Author: M'lady
++Last Changed Rev: 1
++Last Changed Date: 2024-05-05 11:15:18 +0300 (��, 05 ��� 2024)
++
++ssdd
+\ No newline at end of file

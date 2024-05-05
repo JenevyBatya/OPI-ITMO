@@ -1,0 +1,329 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+<project name="web3" default="build" basedir=".">
+    <property file="build.properties"/>
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+        <classpath>
+            <pathelement location="lib/ant-contrib-1.0b3.jar"/>
+        </classpath>
+    </taskdef>
+    <target name="init">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+        <mkdir dir="${doc.dir}"/>
+        <mkdir dir="${test.dir}"/>
+
+    </target>
+
+    <target name="compile" depends="init">
+        <echo>Compiling...</echo>
+        <javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false">
+            <classpath>
+                <fileset dir="${lib.dir}" includes="*.jar"/>
+            </classpath>
+        </javac>
+        <javac srcdir="${src.test.dir}" destdir="${test.dir}" includeantruntime="false">
+            <classpath>
+                <fileset dir="${lib.dir}" includes="*.jar"/>
+                <fileset dir="${dist.dir}" includes="*.jar"/>
+            </classpath>
+        </javac>
+    </target>
+
+
+    <target name="build" depends="compile">
+        <echo>Building...</echo>
+
+        <condition property="isAltBuild" value="true">
+            <isset property="alt"/>
+        </condition>
+
+        <antcall target="create-jar"/>
+    </target>
+
+    <target name="create-alt-jar" if="isAltBuild">
+        <echo>Building alt...</echo>
+        <jar destfile="${dist.dir}/alt-${jar.name}" basedir="${build.dir}/alt"/>
+    </target>
+
+    <target name="create-normal-jar" unless="isAltBuild">
+        <echo>Building normal...</echo>
+        <jar destfile="${dist.dir}/${jar.name}" basedir="${build.dir}">
+            <manifest>
+                <attribute name="Implementation-Version" value="${version}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="create-jar">
+        <antcall target="create-alt-jar"/>
+        <antcall target="create-normal-jar"/>
+    </target>
+
+
+    <target name="clean">
+        <echo>Cleaning...</echo>
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+        <delete dir="${doc.dir}"/>
+
+    </target>
+
+    <target name="test" depends="build">
+        <echo>Running JUnit Tests...</echo>
+        <mkdir dir="${test.reports.dir}"/>
+        <path id="test.classpath">
+            <pathelement location="${build.dir}"/>
+            <pathelement location="${test.dir}"/>
+            <pathelement location="lib/junit-platform-console-standalone-1.10.2.jar"/>
+        </path>
+        <junitlauncher haltOnFailure="false" printSummary="true">
+            <classpath refid="test.classpath"/>
+            <testclasses outputdir="${test.reports.dir}">
+                <fileset dir="${test.dir}">
+                    <include name="**/*Test.class"/>
+                </fileset>
+                <listener type="legacy-xml" sendSysErr="true"
+                          sendSysOut="true"/>
+            </testclasses>
+        </junitlauncher>
+    </target>
+
+    <target name="xml" depends="init">
+        <echo>Validating XML files...</echo>
+        <taskdef name="xmlvalidation" classname="org.apache.tools.ant.taskdefs.optional.XMLValidateTask"/>
+        <xmlvalidation lenient="true">
+            <fileset dir="${basedir}">
+                <include name="**/*.xml"/>
+                <exclude name=".idea/**"/>
+            </fileset>
+        </xmlvalidation>
+    </target>
+
+    <target name="scp" depends="build">
+        <echo>Putting to remote server...</echo>
+        <scp todir="s368051:zmqd&amp;5562@helios.cs.ifmo.ru:/home/studs/s368051" trust="true" port="2222">
+            <fileset dir="${dist.dir}">
+                <include name="**/*.jar"/>
+            </fileset>
+        </scp>
+    </target>
+
+    <target name="music" depends="build">
+        <echo>Playing cool music for you...</echo>
+        <sound>
+            <success source="${music.dir}" duration="30000"/>
+            <fail source="${music.dir}" duration="30000"/>
+        </sound>
+    </target>
+
+    <target name="native2ascii" depends="compile">
+        <echo>Converting .class files to native2ascii...</echo>
+        <mkdir dir="${build.dir}/ascii"/>
+
+        <fileset id="class.files" dir="${build.src.dir}">
+            <include name="**/*.class"/>
+        </fileset>
+        <native2ascii src="${build.src.dir}"
+                      dest="${build.ascii.dir}/"/>
+
+    </target>
+
+    <target name="doc" depends="build">
+        <echo>Adding MD5 and SHA-1 to MANIFEST.MF and generating Javadoc...</echo>
+        <checksum file="${dist.dir}/${jar.name}" algorithm="MD5" property="file.md5"/>
+        <checksum file="${dist.dir}/${jar.name}" algorithm="SHA1" property="file.sha1"/>
+
+        <manifest file="${dist.dir}/MANIFEST.MF">
+            <attribute name="MD5-Digest" value="${file.md5}"/>
+            <attribute name="SHA1-Digest" value="${file.sha1}"/>
+        </manifest>
+
+        <path id="classpath">
+            <fileset dir=".">
+                <include name="${lib.dir}/*.jar"/>
+            </fileset>
+        </path>
+
+        <javadoc sourcepath="${src.dir};" destdir="${doc.dir}" classpathref="classpath"/>
+
+    </target>
+
+    <target name="alt" depends="build">
+        <echo>Creating alternative version...</echo>
+        <mkdir dir="${build.dir}/alt"/>
+        <copy todir="${build.dir}/alt">
+            <fileset dir="${src.dir}">
+                <include name="**/*.java"/>
+            </fileset>
+            <filterchain>
+                <replaceregex pattern="OldClassName" replace="NewClassName"/>
+                <!-- Добавьте здесь другие замены, если нужно -->
+            </filterchain>
+        </copy>
+        <antcall target="build">
+            <param name="alt" value="true"/>
+        </antcall>
+
+    </target>
+
+    <target name="env" depends="build">
+        <echo>Building and running in alternative environment...</echo>
+
+        <property name="java.command" value="java"/>
+        <property name="vm.args" value="${vm.args}"/>
+
+
+        <exec executable="${java.command}">
+            <arg value="${vm.args}"/>
+            <arg value="-jar"/>
+            <arg path="${dist.dir}/project.jar"/>
+<!--            <arg value="${java.version}"/>-->
+        </exec>
+    </target>
+
+
+    <target name="report">
+        <fileset id="test.reports.file" dir="${test.reports.dir}">
+            <include name="*.xml"/>
+        </fileset>
+        <property name="test.report.name" refid="test.reports.file"/>
+        <echo message="${test.reports.dir}/${test.report.name}"/>
+        <loadfile property="test.report" srcFile="${test.reports.dir}/${test.report.name}"/>
+        <propertyregex property="failures" input="${test.report}" regexp="failures=&quot;(\d+)" select="\1"/>
+        <propertyregex property="aborted" input="${test.report}" regexp="aborted=&quot;(\d+)" select="\1"/>
+
+        <condition property="tests.passed" value="true">
+            <and>
+                <equals arg1="${failures}" arg2="0"/>
+                <equals arg1="${aborted}" arg2="0"/>
+            </and>
+        </condition>
+        <antcall target="git-report"/>
+    </target>
+
+    <target name="git-report" if="tests.passed">
+        <exec executable="git">
+            <arg value="add"/>
+            <arg value="${test.reports.dir}/${test.report.name}"/>
+        </exec>
+        <exec executable="git">
+            <arg value="commit"/>
+            <arg value="-m"/>
+            <arg value="Report for Junit tests"/>
+        </exec>
+    </target>
+
+
+    <target name="team">
+
+        <exec executable="git" outputproperty="revision.list">
+            <arg value="log"/>
+            <arg value="--pretty=%H"/>
+            <arg value="-n"/>
+            <arg value="4"/>
+        </exec>
+        <echo message="${revision.list}"/>
+
+
+        <propertyregex property="revision.list" input="${revision.list}" regexp="\n" replace="," global="true"/>
+
+
+        <filelist id="revision.filelist" dir="${revision.list}">
+            <file name="*"/>
+        </filelist>
+
+        <apply executable="ant" parallel="true">
+            <arg value="build"/>
+            <arg value="-f"/>
+            <arg value="${ant.file}"/>
+            <filelist refid="revision.filelist"/>
+        </apply>
+
+        <zip destfile="${dist.dir}/revisions.zip">
+            <fileset dir="${dist.dir}" includes="*.jar"/>
+        </zip>
+    </target>
+
+    <target name="history">
+        <exec executable="svn" outputproperty="svn.revision">
+            <arg line="info --show-item revision"/>
+        </exec>
+
+        <echo message="Current revision: ${svn.revision}"/>
+        <if>
+            <equals arg1="${svn.revision}" arg2="${2}"/>
+            <then>
+                <echo message="No more revisions to checkout"/>
+            </then>
+            <else>
+                <trycatch>
+                    <try>
+                        <antcall target="compile"/>
+                        <echo message="Project compiled successfully!"/>
+
+                        <sequential>
+                            <exec executable="svn" outputproperty="diff_output">
+                                <arg line="diff -r PREV:${svn.revision}"/>
+                            </exec>
+                            <echo file="diff_output.txt" message="${diff_output}"/>
+                        </sequential>
+                    </try>
+                    <catch>
+                        <echo message="Project compilation failed!"/>
+                        <echo message="Checking out previous revision"/>
+                        <exec executable="svn" dir=".">
+                            <arg line="update -r PREV"/>
+                        </exec>
+                        <exec executable="svn" outputproperty="svn.revision">
+                            <arg line="info --show-item revision"/>
+                        </exec>
+<<<<<<< .mine
+                        <echo message="Current revision: ${svn.revision}"/>
+||||||| .r11
+                        <echo message="Current revision: ${svn.revision}dv"/>
+=======
+                        <echo message="Current revision: ${svn.revision}sc"/>
+>>>>>>> .r14
+
+                    </catch>
+                </trycatch>
+            </else>
+        </if>
+
+    </target>
+    <target name="diff">
+        <exec executable="svn" outputproperty="svn.status_output">
+            <arg line="status --xml"/>
+        </exec>
+
+        <xmlproperty file="svn_status.xml" prefix="svn"/>
+
+        <condition property="svn.should_commit" value="true">
+            <and>
+                <resourcecount count="0">
+                    <intersect>
+                        <filelist id="svn.files_to_commit" files="${svn.status_output}"/>
+                        <filelist files="${svn.diff_classes}" />
+                    </intersect>
+                </resourcecount>
+            </and>
+        </condition>
+
+        <if>
+            <isset property="svn.should_commit"/>
+            <then>
+                <tstamp>
+                    <format property="timestamp" pattern="MM.dd.yyyy hh:mm:ss aa"/>
+                </tstamp>
+                <exec executable="svn">
+                    <arg line="commit -m 'Commit changes from ${timestamp}'"/>
+                </exec>
+                <echo message="Committing changes"/>
+            </then>
+            <else>
+                <echo message="No changes to commit"/>
+            </else>
+        </if>
+    </target>
+</project>

@@ -1,0 +1,57 @@
+Index: build.xml
+===================================================================
+<<<<<<< .mine
+<<<<<<< .mine
+--- build.xml	(revision 13)
++++ build.xml	(revision 14)
+@@ -295,7 +295,7 @@
+                         <exec executable="svn" outputproperty="svn.revision">
+                             <arg line="info --show-item revision"/>
+                         </exec>
+-                        <echo message="Current revision: ${svn.revision}"/>
++                        <echo message="Current revision: ${svn.revision}sc"/>
+||||||| .r13
+--- build.xml	(revision 11)
++++ build.xml	(revision 12)
+@@ -295,7 +295,7 @@
+                         <exec executable="svn" outputproperty="svn.revision">
+                             <arg line="info --show-item revision"/>
+                         </exec>
+-                        <echo message="Current revision: ${svn.revision}dv"/>
++                        <echo message="Current revision: ${svn.revision}"/>
+=======
+--- build.xml	(revision 2)
++++ build.xml	(revision 3)
+@@ -273,11 +273,11 @@
+     </target>
+     <target name="history">
+ <!--        <echo>before</echo>-->
+-        <exec executable="svn" dir="${basedir}" output="snv-info.txt">
++        <exec executable="svn" dir="${basedir}" output="svn-info.txt">
+             <arg value="info"/>
+         </exec>
+||||||| .r12
+--- build.xml	(revision 2)
++++ build.xml	(revision 3)
+@@ -273,11 +273,11 @@
+     </target>
+     <target name="history">
+ <!--        <echo>before</echo>-->
+-        <exec executable="svn" dir="${basedir}" output="snv-info.txt">
++        <exec executable="svn" dir="${basedir}" output="svn-info.txt">
+             <arg value="info"/>
+         </exec>
+=======
+--- build.xml	(revision 11)
++++ build.xml	(revision 12)
+@@ -295,7 +295,7 @@
+                         <exec executable="svn" outputproperty="svn.revision">
+                             <arg line="info --show-item revision"/>
+                         </exec>
+-                        <echo message="Current revision: ${svn.revision}dv"/>
++                        <echo message="Current revision: ${svn.revision}"/>
+>>>>>>> .r14
+>>>>>>> .r12
+ 
+                     </catch>
+                 </trycatch>

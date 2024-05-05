@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+<project name="web3" default="build" basedir=".">
+    <property file="build.properties"/>
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+        <classpath>
+            <pathelement location="lib/ant-contrib-1.0b3.jar"/>
+        </classpath>
+    </taskdef>
+    <target name="init">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+        <mkdir dir="${doc.dir}"/>
+        <mkdir dir="${test.dir}"/>
+
+    </target>
+
+    <target name="compile" depends="init">
+        <echo>Compiling...</echo>
+        <javac srcdir="${src.dir}" destdir="${build.dir}">
+            <classpath>
+                <fileset dir="${lib.dir}" includes="*.jar"/>
+            </classpath>
+        </javac>
+        <javac srcdir="${src.test.dir}" destdir="${test.dir}">
+            <classpath>
+                <fileset dir="${lib.dir}" includes="*.jar"/>
+                <fileset dir="${dist.dir}" includes="*.jar"/>
+            </classpath>
+        </javac>
+    </target>
+
+
+    <target name="build" depends="compile">
+        <echo>Building...</echo>
+
+        <condition property="isAltBuild" value="true">
+            <isset property="alt"/>
+        </condition>
+
+        <antcall target="create-jar"/>
+    </target>
+
+    <target name="create-alt-jar" if="isAltBuild">
+        <echo>Building alt...</echo>
+        <jar destfile="${dist.dir}/alt-${jar.name}" basedir="${build.dir}/alt"/>
+    </target>
+
+    <target name="create-normal-jar" unless="isAltBuild">
+        <echo>Building normal...</echo>
+        <jar destfile="${dist.dir}/${jar.name}" basedir="${build.dir}">
+            <manifest>
+                <attribute name="Implementation-Version" value="${version}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="create-jar">
+        <antcall target="create-alt-jar"/>
+        <antcall target="create-normal-jar"/>
+    </target>
+
+
+    <target name="clean">
+        <echo>Cleaning...</echo>
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+        <delete dir="${doc.dir}"/>
+
+    </target>
+
+
+    <target name="history-loop-help" unless="first.revision.is.on">
+        <exec executable="svn" dir="${basedir}" output="svn-info.txt" append="false">
+            <arg value="info"/>
+        </exec>
+        <loadfile property="svn.info" srcFile="svn-info.txt"/>
+        <propertyregex property="revision" input="${svn.info}" regexp="Revision: (\d+)" select="\1"/>
+
+        <echo message="номер ревизии: ${revision}"/>
+        <condition property="first.revision.is.on" value="true">
+            <equals arg1="${revision}" arg2="2"/>
+        </condition>
+        <echo message="${first.revision.is.on}"/>
+        <antcall target="history-catcher-loop"/>
+
+    </target>
+
+    <target name="history-catcher-loop" unless="first.revision.is.on">
+        <trycatch>
+            <try>
+                <antcall target="compile"/>
+                <property name="successful.compile" value="true"/>
+                <antcall target="svn-diff" param="${revision}"/>
+            </try>
+            <catch>
+                <echo>catch</echo>
+                <sequential>
+                    <property name="successful.compile" value="false"/>
+                    <exec executable="svn">
+                        <arg value="update"/>
+                        <arg value="-r"/>
+                        <arg value="PREV"/>
+                    </exec>
+                    <exec executable="svn" dir="${basedir}" output="svn-info.txt" append="false">
+                        <arg value="info"/>
+                    </exec>
+                    <ant antfile="build.xml" target="history-loop"/>
+                </sequential>
+            </catch>
+        </trycatch>
+    </target>
+    <target name="svn-diff">
+        <exec executable="svn" output="changes.diff">
+            <arg line="diff -r ${revision}: "/>
+        </exec>
+    </target>
+</project>
